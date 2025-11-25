@@ -3,7 +3,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../constants';
-import { Ticket, Bell, Shield, HelpCircle, LogOut, ChevronRight, Edit2, ArrowLeft, Camera, Mail, Phone, Lock, Save, PlusCircle } from 'lucide-react';
+import { Ticket, Bell, Shield, HelpCircle, LogOut, ChevronRight, Edit2, ArrowLeft, Camera, Mail, Phone, Lock, Save, PlusCircle, Trophy } from 'lucide-react';
 import { AppRoute } from '../types';
 
 type ProfileView = 'MAIN' | 'EDIT' | 'NOTIFICATIONS' | 'SECURITY';
@@ -80,10 +80,10 @@ const Profile: React.FC = () => {
       };
 
       return (
-          <div className="animate-fade-in bg-slate-50 min-h-screen">
+          <div className="animate-fade-in bg-slate-50 min-h-screen w-full">
               {/* Header */}
               <div className={`${COLORS.primary} text-white p-4 pt-4 sticky top-0 z-10 shadow-md`}>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 max-w-4xl mx-auto">
                       <button onClick={() => setCurrentView('MAIN')} className="p-2 hover:bg-white/20 rounded-full transition">
                           <ArrowLeft className="w-6 h-6" />
                       </button>
@@ -206,9 +206,9 @@ const Profile: React.FC = () => {
       ];
 
       return (
-        <div className="animate-fade-in bg-slate-50 min-h-screen">
+        <div className="animate-fade-in bg-slate-50 min-h-screen w-full">
              <div className={`${COLORS.primary} text-white p-4 pt-4 sticky top-0 z-10 shadow-md`}>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 max-w-4xl mx-auto">
                       <button onClick={() => setCurrentView('MAIN')} className="p-2 hover:bg-white/20 rounded-full transition">
                           <ArrowLeft className="w-6 h-6" />
                       </button>
@@ -216,7 +216,7 @@ const Profile: React.FC = () => {
                   </div>
               </div>
               
-              <div className="p-6 pb-20">
+              <div className="p-6 pb-20 max-w-4xl mx-auto">
                   <h3 className="text-slate-800 font-bold mb-4">Settings</h3>
                   <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-8">
                       {Object.entries(settings).map(([key, val]) => (
@@ -286,9 +286,9 @@ const Profile: React.FC = () => {
       };
 
       return (
-        <div className="animate-fade-in bg-slate-50 min-h-screen">
+        <div className="animate-fade-in bg-slate-50 min-h-screen w-full">
              <div className={`${COLORS.primary} text-white p-4 pt-4 sticky top-0 z-10 shadow-md`}>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 max-w-4xl mx-auto">
                       <button onClick={() => setCurrentView('MAIN')} className="p-2 hover:bg-white/20 rounded-full transition">
                           <ArrowLeft className="w-6 h-6" />
                       </button>
@@ -296,7 +296,7 @@ const Profile: React.FC = () => {
                   </div>
               </div>
 
-              <div className="p-6 pb-20">
+              <div className="p-6 pb-20 max-w-4xl mx-auto">
                   <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-6">
                       <div className="flex items-center space-x-4 mb-6">
                           <div className="bg-indigo-100 p-3 rounded-full text-indigo-600">
@@ -365,11 +365,11 @@ const Profile: React.FC = () => {
   if (currentView === 'SECURITY') return <SecurityView />;
 
   return (
-    <div className="pb-24 animate-fade-in">
+    <div className="pb-24 animate-fade-in w-full">
       {/* Profile Header */}
       <div className={`${COLORS.primary} pt-8 pb-16 px-6 rounded-b-[2.5rem] shadow-lg text-white relative`}>
-        <div className="flex items-center space-x-4">
-            <div className="relative">
+        <div className="max-w-4xl mx-auto flex items-center space-x-4">
+            <div className="relative flex-shrink-0">
                 <div className="w-20 h-20 rounded-full border-4 border-white/20 bg-white/10 flex items-center justify-center text-2xl font-bold overflow-hidden">
                     {user.profileImage ? (
                         <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
@@ -379,12 +379,12 @@ const Profile: React.FC = () => {
                 </div>
             </div>
             
-            <div className="flex-1">
-                <h2 className="text-2xl font-bold">{user.name}</h2>
-                <p className="opacity-80 font-medium">{user.phone}</p>
+            <div className="flex-1 min-w-0">
+                <h2 className="text-2xl font-bold truncate">{user.name}</h2>
+                <p className="opacity-80 font-medium truncate">{user.phone}</p>
                 <button 
                    onClick={() => setCurrentView('EDIT')}
-                   className="flex items-center space-x-1 text-xs bg-white/20 px-3 py-1 rounded-full mt-2 hover:bg-white/30 transition"
+                   className="flex items-center space-x-1 text-xs bg-white/20 px-3 py-1 rounded-full mt-2 hover:bg-white/30 transition backdrop-blur-sm border border-white/10"
                 >
                     <Edit2 className="w-3 h-3" />
                     <span>Edit Profile</span>
@@ -393,33 +393,46 @@ const Profile: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="px-6 -mt-8 flex space-x-4 overflow-x-auto no-scrollbar pb-2">
-          <div className="min-w-[140px] bg-white p-4 rounded-2xl shadow-md border border-slate-100 flex flex-col justify-between">
-              <p className="text-slate-500 text-xs font-bold uppercase">Total Tickets</p>
-              <div className="flex items-center justify-between mt-2">
-                 <p className="text-2xl font-bold text-[#0c4a6e]">{stats.tickets}</p>
-                 <Ticket className="w-5 h-5 text-slate-300" />
+      {/* Stats Cards - Responsive Grid */}
+      <div className="px-6 -mt-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Total Tickets */}
+              <div className="bg-white p-4 rounded-2xl shadow-lg border border-slate-100 flex flex-row sm:flex-col justify-between items-center sm:items-start transition hover:-translate-y-1">
+                  <div className="flex flex-col">
+                      <p className="text-slate-500 text-xs font-bold uppercase">Total Tickets</p>
+                      <p className="text-2xl font-bold text-[#0c4a6e] mt-1">{stats.tickets}</p>
+                  </div>
+                  <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center">
+                    <Ticket className="w-5 h-5 text-slate-300" />
+                  </div>
               </div>
-          </div>
-          <div className="min-w-[140px] bg-white p-4 rounded-2xl shadow-md border border-slate-100 flex flex-col justify-between">
-              <p className="text-slate-500 text-xs font-bold uppercase">Winnings</p>
-              <p className="text-2xl font-bold text-emerald-600 mt-2">{formatCurrency(stats.winnings)}</p>
-          </div>
-          <div className="min-w-[140px] bg-white p-4 rounded-2xl shadow-md border border-slate-100 flex flex-col justify-between">
-              <div className="flex justify-between items-start">
-                   <p className="text-slate-500 text-xs font-bold uppercase">Wallet</p>
-                   {/* Mock Add Funds Button */}
-                   <button className="text-sky-600 hover:text-sky-700">
-                       <PlusCircle className="w-4 h-4" />
-                   </button>
+              
+              {/* Winnings */}
+              <div className="bg-white p-4 rounded-2xl shadow-lg border border-slate-100 flex flex-row sm:flex-col justify-between items-center sm:items-start transition hover:-translate-y-1">
+                  <div className="flex flex-col">
+                      <p className="text-slate-500 text-xs font-bold uppercase">Winnings</p>
+                      <p className="text-2xl font-bold text-emerald-600 mt-1">{formatCurrency(stats.winnings)}</p>
+                  </div>
+                  <div className="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center">
+                    <Trophy className="w-5 h-5 text-emerald-300" />
+                  </div>
               </div>
-              <p className="text-2xl font-bold text-sky-600 mt-2">{formatCurrency(stats.wallet)}</p>
+
+              {/* Wallet */}
+              <div className="bg-white p-4 rounded-2xl shadow-lg border border-slate-100 flex flex-row sm:flex-col justify-between items-center sm:items-start transition hover:-translate-y-1">
+                  <div className="flex flex-col">
+                       <p className="text-slate-500 text-xs font-bold uppercase">Wallet</p>
+                       <p className="text-2xl font-bold text-sky-600 mt-1">{formatCurrency(stats.wallet)}</p>
+                  </div>
+                  <button className="w-10 h-10 bg-sky-50 rounded-full flex items-center justify-center text-sky-600 hover:bg-sky-100 transition shadow-sm">
+                       <PlusCircle className="w-5 h-5" />
+                  </button>
+              </div>
           </div>
       </div>
 
       {/* Menu Options */}
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-4 max-w-4xl mx-auto mt-4">
         <h3 className="font-bold text-slate-800 text-lg">Account Settings</h3>
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             {/* My Tickets (Route) */}
@@ -427,7 +440,7 @@ const Profile: React.FC = () => {
                 onClick={() => navigate(AppRoute.MY_TICKETS)}
                 className="w-full flex items-center p-4 hover:bg-slate-50 transition border-b border-slate-100"
             >
-                <div className={`w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mr-4`}>
+                <div className={`w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mr-4 flex-shrink-0`}>
                     <Ticket className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
@@ -442,7 +455,7 @@ const Profile: React.FC = () => {
                 onClick={() => setCurrentView('NOTIFICATIONS')}
                 className="w-full flex items-center p-4 hover:bg-slate-50 transition border-b border-slate-100"
             >
-                <div className={`w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-4`}>
+                <div className={`w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mr-4 flex-shrink-0`}>
                     <Bell className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
@@ -457,7 +470,7 @@ const Profile: React.FC = () => {
                 onClick={() => setCurrentView('SECURITY')}
                 className="w-full flex items-center p-4 hover:bg-slate-50 transition border-b border-slate-100"
             >
-                <div className={`w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mr-4`}>
+                <div className={`w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mr-4 flex-shrink-0`}>
                     <Shield className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
@@ -472,7 +485,7 @@ const Profile: React.FC = () => {
                 onClick={() => navigate(AppRoute.HELP)}
                 className="w-full flex items-center p-4 hover:bg-slate-50 transition"
             >
-                <div className={`w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-4`}>
+                <div className={`w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-4 flex-shrink-0`}>
                     <HelpCircle className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
@@ -485,7 +498,7 @@ const Profile: React.FC = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="px-6">
+      <div className="px-6 max-w-4xl mx-auto">
           <button 
             onClick={handleLogout}
             className="w-full bg-red-50 text-red-600 font-bold py-4 rounded-xl flex items-center justify-center space-x-2 border border-red-100 hover:bg-red-100 transition active:scale-95"
