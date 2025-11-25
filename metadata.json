@@ -1,0 +1,7 @@
+{
+  "name": "Kerala Lottery Official",
+  "description": "Official lottery results, ticket checking, and purchasing application.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
