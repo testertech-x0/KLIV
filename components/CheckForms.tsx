@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { QrCode, ShieldCheck, Trophy, Gift, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
 import { COLORS } from '../constants';
 import { useData } from '../DataContext';
+import { PrizeStructure } from '../types';
 
 interface CheckFormProps {
   type: 'TICKET_CHECK' | 'PRIZE_CHECK' | 'PRIZE_CLAIM';
@@ -89,7 +90,8 @@ const CheckForms: React.FC<CheckFormProps> = ({ type }) => {
               let winDetails = '';
 
               Object.entries(prizeStructures).forEach(([code, structure]) => {
-                  const win = structure.find(p => p.winners.includes(ticketNumber) || p.winners.includes(series + ' ' + ticketNumber));
+                  const prizes = structure as PrizeStructure[];
+                  const win = prizes.find(p => p.winners.includes(ticketNumber) || p.winners.includes(series + ' ' + ticketNumber));
                   if (win) {
                       winnerFound = true;
                       winDetails = `Won ${win.rank} (${win.amount}) in draw ${code}`;
